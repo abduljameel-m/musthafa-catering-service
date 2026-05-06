@@ -1,7 +1,12 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
+import { AppProvider } from "./context/AppContext";
+
+import Landing from "./pages/Landing";
 import Login from "./pages/Login";
+import Settings from "./pages/Settings";
+
 import AdminDashboard from "./pages/AdminDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import StockNeeds from "./pages/StockNeeds";
@@ -17,11 +22,11 @@ function ProtectedRoute({ children, allowedRole }) {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   if (!currentUser) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   if (currentUser.role !== allowedRole) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return children;
@@ -33,86 +38,109 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
+    <AppProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* First page */}
+          <Route path="/" element={<Landing />} />
 
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute allowedRole="admin">
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
+          {/* Login page */}
+          <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/admin/stocks"
-          element={
-            <ProtectedRoute allowedRole="admin">
-              <StockOverview />
-            </ProtectedRoute>
-          }
-        />
+          {/* Common settings page */}
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute allowedRole={getCurrentUserRole()}>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/attendance"
-          element={
-            <ProtectedRoute allowedRole="admin">
-              <AttendanceManagement />
-            </ProtectedRoute>
-          }
-        />
+          {/* Admin routes */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/leaves"
-          element={
-            <ProtectedRoute allowedRole="admin">
-              <LeaveManagement />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/stocks"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <StockOverview />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/employee"
-          element={
-            <ProtectedRoute allowedRole="employee">
-              <EmployeeDashboard />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/attendance"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <AttendanceManagement />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/employee/stocks"
-          element={
-            <ProtectedRoute allowedRole="employee">
-              <StockNeeds />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/leaves"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <LeaveManagement />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/employee/leave"
-          element={
-            <ProtectedRoute allowedRole="employee">
-              <LeaveRequest />
-            </ProtectedRoute>
-          }
-        />
+          {/* Employee routes */}
+          <Route
+            path="/employee"
+            element={
+              <ProtectedRoute allowedRole="employee">
+                <EmployeeDashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/employee/attendance"
-          element={
-            <ProtectedRoute allowedRole="employee">
-              <AttendanceView />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/employee/stocks"
+            element={
+              <ProtectedRoute allowedRole="employee">
+                <StockNeeds />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
+          <Route
+            path="/employee/leave"
+            element={
+              <ProtectedRoute allowedRole="employee">
+                <LeaveRequest />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/employee/attendance"
+            element={
+              <ProtectedRoute allowedRole="employee">
+                <AttendanceView />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AppProvider>
   );
+}
+
+function getCurrentUserRole() {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  return currentUser?.role || "guest";
 }
 
 export default App;

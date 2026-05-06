@@ -1,14 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+:root {
+  color-scheme: light;
+
+  --bg-main: #f7f4ff;
+  --bg-soft: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.76);
+  --bg-card-strong: rgba(255, 255, 255, 0.92);
+
+  --text-main: #14111f;
+  --text-muted: #6f6a80;
+  --text-soft: #8b86a0;
+
+  --primary: #7c3aed;
+  --primary-strong: #5b21b6;
+  --secondary: #ec4899;
+  --accent-blue: #2563eb;
+  --accent-cyan: #22d3ee;
+
+  --success: #22c55e;
+  --warning: #f97316;
+  --danger: #ef4444;
+
+  --border-soft: rgba(124, 58, 237, 0.14);
+  --border-white: rgba(255, 255, 255, 0.72);
+
+  --shadow-soft: 0 24px 80px rgba(90, 45, 160, 0.14);
+  --shadow-glow: 0 0 40px rgba(124, 58, 237, 0.24);
+  --shadow-pink: 0 20px 70px rgba(236, 72, 153, 0.2);
+
+  --radius-xl: 32px;
+  --radius-lg: 24px;
+  --radius-md: 18px;
+
+  --gradient-brand: linear-gradient(135deg, #6d5dfc 0%, #9d4edd 45%, #ff4ecd 100%);
+  --gradient-blue: linear-gradient(135deg, #0b102f 0%, #1d2b80 45%, #7c3aed 100%);
+  --gradient-glow:
+    radial-gradient(circle at 10% 10%, rgba(37, 99, 235, 0.3), transparent 28%),
+    radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.25), transparent 26%),
+    radial-gradient(circle at 50% 95%, rgba(124, 58, 237, 0.22), transparent 32%),
+    linear-gradient(135deg, #f9f5ff 0%, #eef4ff 42%, #fff5fb 100%);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-main: #070816;
+  --bg-soft: #0e1025;
+  --bg-card: rgba(14, 16, 37, 0.72);
+  --bg-card-strong: rgba(15, 18, 45, 0.92);
+
+  --text-main: #f8f7ff;
+  --text-muted: #b7b2cf;
+  --text-soft: #8f8aad;
+
+  --primary: #8b5cf6;
+  --primary-strong: #a78bfa;
+  --secondary: #f472b6;
+  --accent-blue: #60a5fa;
+  --accent-cyan: #22d3ee;
+
+  --border-soft: rgba(255, 255, 255, 0.1);
+  --border-white: rgba(255, 255, 255, 0.12);
+
+  --shadow-soft: 0 30px 90px rgba(0, 0, 0, 0.34);
+  --shadow-glow: 0 0 55px rgba(139, 92, 246, 0.28);
+  --shadow-pink: 0 20px 75px rgba(244, 114, 182, 0.18);
+
+  --gradient-glow:
+    radial-gradient(circle at 8% 8%, rgba(37, 99, 235, 0.38), transparent 28%),
+    radial-gradient(circle at 88% 18%, rgba(236, 72, 153, 0.26), transparent 28%),
+    radial-gradient(circle at 45% 90%, rgba(124, 58, 237, 0.3), transparent 34%),
+    linear-gradient(135deg, #050614 0%, #0d1030 45%, #090917 100%);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+  min-height: 100vh;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
-  background: #ffffff;
-  color: #1f2937;
+  background: var(--bg-main);
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -3;
+  background: var(--gradient-glow);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  opacity: 0.52;
+  background-image:
+    linear-gradient(rgba(124, 58, 237, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.07) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(circle at center, black, transparent 76%);
 }
 
 button,
@@ -22,11 +127,123 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 input,
-textarea {
+textarea,
+select {
   outline: none;
+}
+
+input,
+textarea,
+select {
+  color: var(--text-main);
+}
+
+::selection {
+  background: rgba(236, 72, 153, 0.28);
+  color: var(--text-main);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(124, 58, 237, 0.08);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
+  border-radius: 999px;
+}
+
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-white);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(22px);
+}
+
+.gradient-text {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+[data-theme="dark"] .login-page,
+[data-theme="dark"] .landing-page,
+[data-theme="dark"] .app-shell {
+  background: var(--gradient-glow);
+}
+
+[data-theme="dark"] .login-choice-card,
+[data-theme="dark"] .login-form-card,
+[data-theme="dark"] .landing-card,
+[data-theme="dark"] .summary-card,
+[data-theme="dark"] .stock-card,
+[data-theme="dark"] .form-card,
+[data-theme="dark"] .leave-card,
+[data-theme="dark"] .attendance-mark-card,
+[data-theme="dark"] .table-card,
+[data-theme="dark"] .empty-text,
+[data-theme="dark"] .weather-widget,
+[data-theme="dark"] .topbar,
+[data-theme="dark"] .settings-card {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border-color: var(--border-soft);
+}
+
+[data-theme="dark"] p,
+[data-theme="dark"] .brand-subtitle,
+[data-theme="dark"] .login-choice-card p,
+[data-theme="dark"] .profile-role,
+[data-theme="dark"] .weather-widget span,
+[data-theme="dark"] .stock-card p,
+[data-theme="dark"] td,
+[data-theme="dark"] .empty-text,
+[data-theme="dark"] .landing-card p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .profile-name,
+[data-theme="dark"] .weather-widget strong,
+[data-theme="dark"] .stock-count-row strong,
+[data-theme="dark"] .summary-card h3,
+[data-theme="dark"] .summary-card p,
+[data-theme="dark"] .page-header h1 {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select,
+[data-theme="dark"] .landing-language select,
+[data-theme="dark"] .settings-select {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-main);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+@media (max-width: 768px) {
+  body::after {
+    background-size: 38px 38px;
+    opacity: 0.35;
+  }
 }

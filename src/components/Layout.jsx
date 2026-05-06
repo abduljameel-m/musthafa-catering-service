@@ -3,10 +3,12 @@ import Sidebar from "./Sidebar";
 
 function Layout({ children, role }) {
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${role}-shell`}>
       <Sidebar role={role} />
+
       <main className="main-area">
         <TopBar role={role} />
+
         <section className="content-area">{children}</section>
       </main>
     </div>

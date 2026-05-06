@@ -6,30 +6,35 @@ import {
   Home,
   LogOut,
   NotebookTabs,
+  Settings,
 } from "lucide-react";
+import { useApp } from "../context/AppContext";
 
 function Sidebar({ role }) {
   const navigate = useNavigate();
+  const { t } = useApp();
 
   const adminLinks = [
-    { path: "/admin", label: "Dashboard", icon: Home },
-    { path: "/admin/stocks", label: "Stock Overview", icon: Boxes },
-    { path: "/admin/attendance", label: "Attendance", icon: CalendarCheck },
-    { path: "/admin/leaves", label: "Leave Requests", icon: ClipboardList },
+    { path: "/admin", label: t("dashboard"), icon: Home },
+    { path: "/admin/stocks", label: t("stockOverview"), icon: Boxes },
+    { path: "/admin/attendance", label: t("attendance"), icon: CalendarCheck },
+    { path: "/admin/leaves", label: t("leaveRequests"), icon: ClipboardList },
+    { path: "/settings", label: t("settings"), icon: Settings },
   ];
 
   const employeeLinks = [
-    { path: "/employee", label: "Dashboard", icon: Home },
-    { path: "/employee/stocks", label: "Shop Needs", icon: Boxes },
-    { path: "/employee/leave", label: "Apply Leave", icon: NotebookTabs },
-    { path: "/employee/attendance", label: "Attendance", icon: CalendarCheck },
+    { path: "/employee", label: t("dashboard"), icon: Home },
+    { path: "/employee/stocks", label: t("shopNeeds"), icon: Boxes },
+    { path: "/employee/leave", label: t("applyLeave"), icon: NotebookTabs },
+    { path: "/employee/attendance", label: t("attendance"), icon: CalendarCheck },
+    { path: "/settings", label: t("settings"), icon: Settings },
   ];
 
   const links = role === "admin" ? adminLinks : employeeLinks;
 
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -38,7 +43,7 @@ function Sidebar({ role }) {
         <div className="brand-logo">M</div>
         <div>
           <h2>MCS</h2>
-          <p>Shop Manager</p>
+          <p>{t("smartShopManagement")}</p>
         </div>
       </div>
 
@@ -57,7 +62,7 @@ function Sidebar({ role }) {
 
       <button className="logout-button" onClick={handleLogout}>
         <LogOut size={18} />
-        Logout
+        {t("logout")}
       </button>
     </aside>
   );

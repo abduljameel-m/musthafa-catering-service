@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Eye, EyeOff, ShieldCheck, UserRound } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, ShieldCheck, UserRound } from "lucide-react";
 import { users } from "../data/initialData";
+import { useApp } from "../context/AppContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { t } = useApp();
 
-  const [activeRole, setActiveRole] = useState("admin");
+  const [activeRole, setActiveRole] = useState(null);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -14,127 +16,141 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
+  const handleRoleSelect = (role) => {
+    setActiveRole(role);
+    setFormData({
+      username: "",
+      password: "",
+    });
+    setError("");
+  };
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value.trim(),
     });
   };
 
-  const handleLogin = (role) => {
+  const handleLogin = (event) => {
+    event.preventDefault();
     setError("");
 
-    const selectedUser = users[role];
+    const selectedUser = users[activeRole];
 
     if (
+      selectedUser &&
       formData.username === selectedUser.username &&
       formData.password === selectedUser.password
     ) {
-      localStorage.setItem("currentUser", JSON.stringify(selectedUser));
+      const userToSave = {
+        username: selectedUser.username,
+        role: selectedUser.role,
+        name: selectedUser.name,
+      };
 
-      if (role === "admin") {
-        navigate("/admin");
+      localStorage.setItem("currentUser", JSON.stringify(userToSave));
+
+      if (selectedUser.role === "admin") {
+        navigate("/admin", { replace: true });
       } else {
-        navigate("/employee");
+        navigate("/employee", { replace: true });
       }
     } else {
-      setError("Invalid username or password");
+      setError(t("invalidLogin"));
     }
   };
 
   return (
     <main className="login-page">
       <section className="login-hero">
-        <p className="brand-tag">Smart Shop Management</p>
-        <h1>Musthafa Catering Service</h1>
-        <p className="brand-subtitle">
-          Manage stocks, attendance, leave requests, and daily shop needs from
-          one clean dashboard.
-        </p>
+        <p className="brand-tag">{t("smartShopManagement")}</p>
+        <h1>{t("companyName")}</h1>
+        <p className="brand-subtitle">{t("loginSubtitle")}</p>
       </section>
 
-      <section className="login-card-wrapper">
-        <div
-          className={`login-choice-card ${
-            activeRole === "admin" ? "active-login-card" : ""
-          }`}
-          onClick={() => setActiveRole("admin")}
-        >
-          <div className="login-icon admin-icon">
-            <ShieldCheck size={30} />
+      {!activeRole && (
+        <section className="login-card-wrapper">
+          <div
+            className="login-choice-card"
+            onClick={() => handleRoleSelect("admin")}
+          >
+            <div className="login-icon admin-icon">
+              <ShieldCheck size={30} />
+            </div>
+            <h2>{t("adminLogin")}</h2>
+            <p>{t("adminLoginDescription")}</p>
           </div>
-          <h2>Admin Login</h2>
-          <p>View stocks, approve leave, and mark attendance.</p>
-        </div>
 
-        <div
-          className={`login-choice-card ${
-            activeRole === "employee" ? "active-login-card" : ""
-          }`}
-          onClick={() => setActiveRole("employee")}
-        >
-          <div className="login-icon employee-icon">
-            <UserRound size={30} />
+          <div
+            className="login-choice-card"
+            onClick={() => handleRoleSelect("employee")}
+          >
+            <div className="login-icon employee-icon">
+              <UserRound size={30} />
+            </div>
+            <h2>{t("employeeLogin")}</h2>
+            <p>{t("employeeLoginDescription")}</p>
           </div>
-          <h2>Employee Login</h2>
-          <p>Update needs, request leave, and view attendance.</p>
-        </div>
-      </section>
+        </section>
+      )}
 
-      <section className="login-form-card">
-        <h2>{activeRole === "admin" ? "Admin Access" : "Employee Access"}</h2>
+      {activeRole && (
+        <form className="login-form-card" onSubmit={handleLogin}>
+          <button
+            type="button"
+            className="back-role-button"
+            onClick={() => setActiveRole(null)}
+          >
+            <ArrowLeft size={17} />
+            {t("back")}
+          </button>
 
-        <div className="login-demo-box">
-          <p>
-            <strong>Demo Username:</strong>{" "}
-            {activeRole === "admin" ? "admin" : "employee"}
-          </p>
-          <p>
-            <strong>Demo Password:</strong>{" "}
-            {activeRole === "admin" ? "admin123" : "emp123"}
-          </p>
-        </div>
+          <h2>
+            {activeRole === "admin" ? t("adminAccess") : t("employeeAccess")}
+          </h2>
 
-        <div className="form-group">
-          <label>Username</label>
-          <input
-            type="text"
-            name="username"
-            placeholder="Enter username"
-            value={formData.username}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Password</label>
-          <div className="password-box">
+          <div className="form-group">
+            <label>{t("username")}</label>
             <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Enter password"
-              value={formData.password}
+              type="text"
+              name="username"
+              placeholder={t("enterUsername")}
+              value={formData.username}
               onChange={handleChange}
+              autoComplete="username"
             />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-            </button>
           </div>
-        </div>
 
-        {error && <p className="login-error">{error}</p>}
+          <div className="form-group">
+            <label>{t("password")}</label>
+            <div className="password-box">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder={t("enterPassword")}
+                value={formData.password}
+                onChange={handleChange}
+                autoComplete="current-password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+          </div>
 
-        <button className="login-button" onClick={() => handleLogin(activeRole)}>
-          Login as {activeRole === "admin" ? "Admin" : "Employee"}
-        </button>
-      </section>
+          {error && <p className="login-error">{error}</p>}
 
-      <footer className="login-footer">
-        © 2026 Musthafa Catering Service. All rights reserved by ABDUL JAMEEL M
-      </footer>
+          <button className="login-button" type="submit">
+            {activeRole === "admin" ? t("loginAsAdmin") : t("loginAsEmployee")}
+          </button>
+        </form>
+      )}
+
+      <footer className="login-footer">{t("footerRights")}</footer>
     </main>
   );
 }
