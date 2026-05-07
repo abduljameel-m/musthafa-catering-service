@@ -661,3 +661,572 @@
     padding-inline: 10px;
   }
 }
+/* ---------- Premium Landing Upgrade ---------- */
+
+.landing-topbar {
+  width: min(1320px, 100%);
+  position: fixed;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 22px;
+}
+
+.landing-brand-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  font-weight: 950;
+  letter-spacing: -0.4px;
+}
+
+.mini-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #6d5dfc, #9d4edd 45%, #ff4ecd);
+  color: #ffffff;
+  box-shadow: 0 18px 48px rgba(236, 72, 153, 0.24);
+}
+
+.landing-language {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px 7px 13px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(20px);
+  color: #ffffff;
+}
+
+.landing-language select {
+  min-height: 42px;
+  border: none;
+  border-radius: 15px;
+  padding: 0 12px;
+  background: transparent;
+  color: #ffffff;
+  font-weight: 900;
+  box-shadow: none;
+}
+
+.landing-language option {
+  color: #14111f;
+}
+
+.landing-hero-shell {
+  width: min(1180px, 100%);
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) 360px;
+  gap: 24px;
+  align-items: center;
+}
+
+.chef-logo-main {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 22px;
+  border-radius: 30px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(109, 93, 252, 0.22), rgba(255, 78, 205, 0.2));
+  color: #d8b4fe;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 24px 70px rgba(124, 58, 237, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.brand-tag {
+  gap: 8px;
+}
+
+.landing-preview-card {
+  position: relative;
+  overflow: hidden;
+  padding: 22px;
+  border-radius: 34px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035)),
+    rgba(11, 13, 36, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow:
+    0 34px 110px rgba(0, 0, 0, 0.36),
+    0 0 70px rgba(37, 99, 235, 0.16);
+  backdrop-filter: blur(24px);
+}
+
+.landing-preview-card::before {
+  content: "";
+  position: absolute;
+  width: 210px;
+  height: 210px;
+  right: -90px;
+  top: -80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.34), transparent 65%);
+}
+
+.preview-header {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.preview-header span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.preview-weather-card {
+  position: relative;
+  z-index: 1;
+  padding: 18px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.72), rgba(124, 58, 237, 0.65));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.preview-weather-card p,
+.preview-weather-card span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.preview-weather-card h3 {
+  color: #ffffff;
+  font-size: 34px;
+  letter-spacing: -1px;
+  margin-block: 3px;
+}
+
+.weather-orb {
+  width: 58px;
+  height: 58px;
+  border-radius: 21px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 28px;
+}
+
+.preview-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.preview-grid div {
+  padding: 16px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.preview-grid p {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.preview-grid h3 {
+  color: #ffffff;
+  font-size: 26px;
+  margin-top: 5px;
+}
+
+.preview-feature {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.07);
+  margin-top: 10px;
+  color: #d8b4fe;
+}
+
+.preview-feature h4 {
+  color: #ffffff;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.preview-feature p {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+}
+
+.landing-bottom-strip {
+  width: min(880px, 100%);
+  position: relative;
+  z-index: 2;
+  margin-top: 24px;
+  padding: 14px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  backdrop-filter: blur(18px);
+}
+
+.landing-bottom-strip div {
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #ffffff;
+  font-weight: 900;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="light"] .landing-brand-mini {
+  color: #14111f;
+}
+
+[data-theme="light"] .landing-language {
+  background: rgba(255, 255, 255, 0.78);
+  color: #7c3aed;
+  border-color: rgba(124, 58, 237, 0.15);
+}
+
+[data-theme="light"] .landing-language select {
+  color: #14111f;
+}
+
+[data-theme="light"] .landing-preview-card {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.66)),
+    rgba(255, 255, 255, 0.78);
+  border-color: rgba(255, 255, 255, 0.76);
+}
+
+[data-theme="light"] .preview-grid div,
+[data-theme="light"] .preview-feature {
+  background: rgba(124, 58, 237, 0.08);
+  border-color: rgba(124, 58, 237, 0.08);
+}
+
+[data-theme="light"] .preview-grid h3,
+[data-theme="light"] .preview-feature h4 {
+  color: #14111f;
+}
+
+[data-theme="light"] .preview-grid p,
+[data-theme="light"] .preview-feature p {
+  color: #6f6a80;
+}
+
+[data-theme="light"] .landing-bottom-strip {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(124, 58, 237, 0.12);
+}
+
+[data-theme="light"] .landing-bottom-strip div {
+  background: rgba(124, 58, 237, 0.08);
+  color: #7c3aed;
+}
+
+@media (max-width: 980px) {
+  .landing-hero-shell {
+    grid-template-columns: 1fr;
+    width: min(760px, 100%);
+  }
+
+  .landing-preview-card {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .landing-topbar {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    padding-inline: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .landing-brand-mini {
+    justify-content: center;
+  }
+
+  .landing-language {
+    width: 100%;
+  }
+
+  .landing-language select {
+    width: 100%;
+  }
+
+  .chef-logo-main {
+    width: 74px;
+    height: 74px;
+    border-radius: 25px;
+  }
+
+  .landing-bottom-strip {
+    flex-direction: column;
+  }
+
+  .landing-bottom-strip div {
+    justify-content: center;
+  }
+}
+/* ================================
+   MINIMAL PREMIUM LANDING PAGE
+================================ */
+
+.minimal-landing {
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(37, 99, 235, 0.35), transparent 28%),
+    radial-gradient(circle at 88% 20%, rgba(236, 72, 153, 0.28), transparent 30%),
+    radial-gradient(circle at 50% 92%, rgba(124, 58, 237, 0.26), transparent 34%),
+    linear-gradient(135deg, #050614 0%, #0d1030 48%, #080816 100%);
+  overflow: hidden;
+}
+
+.minimal-landing-topbar {
+  position: fixed;
+  top: 22px;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.minimal-language-box,
+.theme-switch-button {
+  min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  backdrop-filter: blur(22px);
+  box-shadow:
+    0 18px 55px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.minimal-language-box select {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 15px;
+}
+
+.minimal-language-box option {
+  color: #14111f;
+}
+
+.theme-switch-button {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.theme-switch-button:hover {
+  transform: translateY(-2px);
+  background: rgba(236, 72, 153, 0.18);
+}
+
+.minimal-landing-content {
+  width: min(860px, 100%);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  padding: 54px 24px;
+}
+
+.minimal-landing-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: min(720px, 92vw);
+  height: min(720px, 92vw);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, rgba(96, 165, 250, 0.22), transparent 24%),
+    radial-gradient(circle at 68% 54%, rgba(236, 72, 153, 0.18), transparent 28%),
+    radial-gradient(circle, rgba(124, 58, 237, 0.12), transparent 64%);
+  filter: blur(8px);
+  z-index: -1;
+}
+
+.chef-logo-main {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 22px;
+  border-radius: 30px;
+  display: grid;
+  place-items: center;
+  color: #d8b4fe;
+  background: linear-gradient(135deg, rgba(109, 93, 252, 0.22), rgba(255, 78, 205, 0.18));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 24px 70px rgba(124, 58, 237, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.minimal-landing-content .brand-tag {
+  margin-bottom: 22px;
+}
+
+.minimal-landing-content h1 {
+  font-size: clamp(48px, 9vw, 116px);
+  line-height: 0.92;
+  letter-spacing: -5px;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 35%, #ec4899 78%, #f9a8d4 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: 0 0 70px rgba(124, 58, 237, 0.32);
+}
+
+.minimal-tagline {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(17px, 2vw, 22px);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  margin-bottom: 30px;
+}
+
+.minimal-enter {
+  min-width: 138px;
+  height: 52px;
+  font-size: 16px;
+}
+
+.minimal-footer {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(900px, calc(100% - 32px));
+  text-align: center;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 13px;
+  font-weight: 700;
+  z-index: 5;
+}
+
+/* Light mode landing */
+[data-theme="light"] .minimal-landing {
+  background:
+    radial-gradient(circle at 12% 12%, rgba(37, 99, 235, 0.18), transparent 28%),
+    radial-gradient(circle at 88% 20%, rgba(236, 72, 153, 0.18), transparent 30%),
+    radial-gradient(circle at 50% 92%, rgba(124, 58, 237, 0.18), transparent 34%),
+    linear-gradient(135deg, #f9f5ff 0%, #eef4ff 45%, #fff5fb 100%);
+}
+
+[data-theme="light"] .minimal-language-box,
+[data-theme="light"] .theme-switch-button {
+  background: rgba(255, 255, 255, 0.78);
+  color: #14111f;
+  border-color: rgba(124, 58, 237, 0.14);
+}
+
+[data-theme="light"] .minimal-language-box select {
+  color: #14111f;
+}
+
+[data-theme="light"] .minimal-tagline {
+  color: #6f6a80;
+}
+
+[data-theme="light"] .minimal-footer {
+  color: #6f6a80;
+}
+
+@media (max-width: 700px) {
+  .minimal-landing {
+    padding: 18px;
+  }
+
+  .minimal-landing-topbar {
+    top: 16px;
+    padding: 0 14px;
+    gap: 10px;
+  }
+
+  .minimal-language-box,
+  .theme-switch-button {
+    min-height: 44px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+
+  .theme-switch-button span {
+    display: none;
+  }
+
+  .minimal-landing-content {
+    padding: 36px 8px;
+  }
+
+  .chef-logo-main {
+    width: 74px;
+    height: 74px;
+    border-radius: 25px;
+  }
+
+  .minimal-landing-content h1 {
+    letter-spacing: -2.5px;
+  }
+
+  .minimal-footer {
+    bottom: 14px;
+    font-size: 11px;
+  }
+}

@@ -3,6 +3,7 @@ import {
   Boxes,
   CalendarCheck,
   ClipboardList,
+  ChefHat,
   Home,
   LogOut,
   NotebookTabs,
@@ -38,33 +39,55 @@ function Sidebar({ role }) {
   };
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-brand">
-        <div className="brand-logo">M</div>
-        <div>
-          <h2>MCS</h2>
-          <p>{t("smartShopManagement")}</p>
+    <>
+      <aside className="sidebar desktop-sidebar">
+        <div className="sidebar-brand">
+          <div className="brand-logo">
+            <ChefHat size={25} />
+          </div>
+          <div>
+            <h2>MCS</h2>
+            <p>{t("smartShopManagement")}</p>
+          </div>
         </div>
-      </div>
 
-      <nav className="sidebar-nav">
-        {links.map((link) => {
+        <nav className="sidebar-nav">
+          {links.map((link) => {
+            const Icon = link.icon;
+
+            return (
+              <NavLink key={link.path} to={link.path} className="nav-link">
+                <Icon size={18} />
+                <span>{link.label}</span>
+              </NavLink>
+            );
+          })}
+        </nav>
+
+        <button className="logout-button" onClick={handleLogout}>
+          <LogOut size={18} />
+          {t("logout")}
+        </button>
+      </aside>
+
+      <nav className="mobile-bottom-nav">
+        {links.slice(0, 4).map((link) => {
           const Icon = link.icon;
 
           return (
-            <NavLink key={link.path} to={link.path} className="nav-link">
-              <Icon size={18} />
+            <NavLink key={link.path} to={link.path} className="mobile-nav-link">
+              <Icon size={19} />
               <span>{link.label}</span>
             </NavLink>
           );
         })}
-      </nav>
 
-      <button className="logout-button" onClick={handleLogout}>
-        <LogOut size={18} />
-        {t("logout")}
-      </button>
-    </aside>
+        <NavLink to="/settings" className="mobile-nav-link">
+          <Settings size={19} />
+          <span>{t("settings")}</span>
+        </NavLink>
+      </nav>
+    </>
   );
 }
 
