@@ -1,15 +1,19 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import {
+  Bell,
   Boxes,
   CalendarCheck,
-  ClipboardList,
   ChefHat,
+  ClipboardList,
   Home,
   LogOut,
+  Megaphone,
   NotebookTabs,
   Settings,
+  UsersRound,
 } from "lucide-react";
 import { useApp } from "../context/AppContext";
+import { logoutFirebase } from "../firebase/firebase";
 
 function Sidebar({ role }) {
   const navigate = useNavigate();
@@ -17,6 +21,9 @@ function Sidebar({ role }) {
 
   const adminLinks = [
     { path: "/admin", label: t("dashboard"), icon: Home },
+    { path: "/admin/employees", label: "Employees", icon: UsersRound },
+    { path: "/admin/notifications", label: "Send Notice", icon: Megaphone },
+    { path: "/notifications", label: "Notifications", icon: Bell },
     { path: "/admin/stocks", label: t("stockOverview"), icon: Boxes },
     { path: "/admin/attendance", label: t("attendance"), icon: CalendarCheck },
     { path: "/admin/leaves", label: t("leaveRequests"), icon: ClipboardList },
@@ -25,6 +32,7 @@ function Sidebar({ role }) {
 
   const employeeLinks = [
     { path: "/employee", label: t("dashboard"), icon: Home },
+    { path: "/notifications", label: "Notifications", icon: Bell },
     { path: "/employee/stocks", label: t("shopNeeds"), icon: Boxes },
     { path: "/employee/leave", label: t("applyLeave"), icon: NotebookTabs },
     { path: "/employee/attendance", label: t("attendance"), icon: CalendarCheck },
@@ -33,7 +41,30 @@ function Sidebar({ role }) {
 
   const links = role === "admin" ? adminLinks : employeeLinks;
 
-  const handleLogout = () => {
+  const mobileLinks =
+    role === "admin"
+      ? [
+          { path: "/admin", label: "Home", icon: Home },
+          { path: "/admin/employees", label: "Staff", icon: UsersRound },
+          { path: "/admin/notifications", label: "Notice", icon: Megaphone },
+          { path: "/notifications", label: "Alerts", icon: Bell },
+          { path: "/settings", label: "Settings", icon: Settings },
+        ]
+      : [
+          { path: "/employee", label: "Home", icon: Home },
+          { path: "/notifications", label: "Alerts", icon: Bell },
+          { path: "/employee/stocks", label: "Stock", icon: Boxes },
+          { path: "/employee/leave", label: "Leave", icon: NotebookTabs },
+          { path: "/settings", label: "Settings", icon: Settings },
+        ];
+
+  const handleLogout = async () => {
+    try {
+      await logoutFirebase();
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+
     localStorage.removeItem("currentUser");
     navigate("/login");
   };
@@ -71,7 +102,7 @@ function Sidebar({ role }) {
       </aside>
 
       <nav className="mobile-bottom-nav">
-        {links.slice(0, 4).map((link) => {
+        {mobileLinks.map((link) => {
           const Icon = link.icon;
 
           return (
@@ -81,11 +112,6 @@ function Sidebar({ role }) {
             </NavLink>
           );
         })}
-
-        <NavLink to="/settings" className="mobile-nav-link">
-          <Settings size={19} />
-          <span>{t("settings")}</span>
-        </NavLink>
       </nav>
     </>
   );

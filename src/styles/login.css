@@ -1230,3 +1230,415 @@
     font-size: 11px;
   }
 }
+/* ================================
+   FINAL LANDING SIZE FIX
+   No scroll + English-first layout
+================================ */
+
+.minimal-landing {
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  padding: 18px 24px;
+}
+
+.minimal-landing-topbar {
+  top: 16px;
+  padding: 0 24px;
+}
+
+.minimal-language-box,
+.theme-switch-button {
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+}
+
+.minimal-language-box select {
+  font-size: 14px;
+}
+
+.minimal-landing-content {
+  width: min(780px, 100%);
+  padding: 20px 18px;
+  margin-top: 10px;
+}
+
+.chef-logo-main {
+  width: 68px;
+  height: 68px;
+  border-radius: 24px;
+  margin-bottom: 14px;
+}
+
+.chef-logo-main svg {
+  width: 34px;
+  height: 34px;
+}
+
+.minimal-landing-content .brand-tag {
+  margin-bottom: 14px;
+  padding: 7px 14px;
+  font-size: 12px;
+}
+
+.minimal-landing-content h1 {
+  font-size: clamp(34px, 6vw, 72px);
+  line-height: 0.98;
+  letter-spacing: -2.8px;
+  margin-bottom: 16px;
+}
+
+.minimal-tagline {
+  font-size: clamp(15px, 1.7vw, 19px);
+  margin-bottom: 20px;
+}
+
+.minimal-enter {
+  min-width: 118px;
+  height: 46px;
+  font-size: 15px;
+}
+
+.minimal-footer {
+  bottom: 14px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* Mobile perfect fit */
+@media (max-width: 700px) {
+  .minimal-landing {
+    padding: 14px;
+  }
+
+  .minimal-landing-topbar {
+    top: 12px;
+    padding: 0 12px;
+  }
+
+  .minimal-language-box,
+  .theme-switch-button {
+    min-height: 40px;
+    padding: 0 10px;
+  }
+
+  .minimal-language-box select {
+    font-size: 13px;
+    max-width: 115px;
+  }
+
+  .minimal-landing-content {
+    padding: 10px 4px;
+    margin-top: 18px;
+  }
+
+  .chef-logo-main {
+    width: 58px;
+    height: 58px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .chef-logo-main svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .minimal-landing-content .brand-tag {
+    font-size: 11px;
+    padding: 6px 11px;
+    margin-bottom: 12px;
+  }
+
+  .minimal-landing-content h1 {
+    font-size: clamp(32px, 11vw, 48px);
+    line-height: 1;
+    letter-spacing: -1.7px;
+    margin-bottom: 12px;
+  }
+
+  .minimal-tagline {
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+
+  .minimal-enter {
+    min-width: 104px;
+    height: 42px;
+    font-size: 14px;
+  }
+
+  .minimal-footer {
+    bottom: 10px;
+    width: calc(100% - 24px);
+    font-size: 10.5px;
+  }
+}
+
+/* Very small mobile */
+@media (max-height: 680px) {
+  .chef-logo-main {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 9px;
+  }
+
+  .minimal-landing-content .brand-tag {
+    margin-bottom: 9px;
+  }
+
+  .minimal-landing-content h1 {
+    font-size: clamp(30px, 8vw, 54px);
+    margin-bottom: 10px;
+  }
+
+  .minimal-tagline {
+    margin-bottom: 14px;
+  }
+
+  .minimal-footer {
+    font-size: 10px;
+  }
+}
+/* ================================
+   FINAL LOGIN + LANDING MOBILE POLISH
+================================ */
+
+.login-page,
+.landing-page,
+.minimal-landing {
+  overflow-x: hidden;
+}
+
+/* Landing should fit and not feel oversized */
+.minimal-landing {
+  height: 100dvh;
+  min-height: 100dvh;
+  max-height: 100dvh;
+}
+
+.minimal-landing-content {
+  max-height: calc(100dvh - 150px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.minimal-landing-content h1 {
+  max-width: 920px;
+}
+
+/* Login page can scroll smoothly if needed */
+.login-page {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.login-card-wrapper,
+.login-form-card {
+  flex-shrink: 0;
+}
+
+/* Better login mobile spacing */
+@media (max-width: 700px) {
+  .login-page {
+    padding: 18px 12px;
+  }
+
+  .login-hero h1 {
+    font-size: clamp(34px, 10vw, 48px);
+    line-height: 1;
+  }
+
+  .brand-subtitle {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .login-card-wrapper {
+    margin-top: 20px;
+  }
+
+  .login-choice-card {
+    padding: 20px;
+  }
+
+  .login-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 18px;
+    margin-bottom: 14px;
+  }
+
+  .login-form-card {
+    margin-top: 20px;
+    padding: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .password-box input,
+  .password-box button {
+    min-height: 48px;
+  }
+
+  .login-button {
+    height: 50px;
+  }
+}
+
+@media (max-width: 420px) {
+  .minimal-landing-topbar {
+    gap: 8px;
+  }
+
+  .minimal-language-box {
+    max-width: 160px;
+  }
+
+  .minimal-language-box select {
+    max-width: 105px;
+  }
+
+  .minimal-landing-content h1 {
+    font-size: clamp(30px, 10vw, 42px);
+    letter-spacing: -1.5px;
+  }
+
+  .minimal-tagline {
+    font-size: 13px;
+  }
+
+  .minimal-footer {
+    font-size: 9.5px;
+  }
+}
+
+@media (max-height: 640px) {
+  .minimal-landing-content {
+    max-height: calc(100dvh - 120px);
+  }
+
+  .chef-logo-main {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+  }
+
+  .chef-logo-main svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .minimal-landing-content .brand-tag {
+    margin-bottom: 8px;
+    font-size: 10px;
+  }
+
+  .minimal-landing-content h1 {
+    font-size: clamp(28px, 7vw, 46px);
+    margin-bottom: 8px;
+  }
+
+  .minimal-tagline {
+    margin-bottom: 12px;
+  }
+
+  .minimal-enter {
+    height: 40px;
+  }
+}
+.auth-note {
+  color: rgba(255, 255, 255, 0.66);
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.auth-note strong {
+  color: #ffffff;
+  text-transform: capitalize;
+}
+
+.auth-method-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.auth-method-tabs button {
+  min-height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: 0.24s ease;
+}
+
+.auth-method-tabs button.active,
+.auth-method-tabs button:hover {
+  color: #ffffff;
+  background: linear-gradient(135deg, #6d5dfc, #9d4edd 48%, #ff4ecd);
+  box-shadow: 0 18px 45px rgba(236, 72, 153, 0.22);
+}
+
+.firebase-auth-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.phone-login-box {
+  display: grid;
+  gap: 14px;
+}
+
+.resend-button {
+  margin-top: 0;
+  width: 100%;
+  justify-content: center;
+}
+
+[data-theme="light"] .auth-note {
+  color: #6f6a80;
+}
+
+[data-theme="light"] .auth-note strong {
+  color: #14111f;
+}
+
+[data-theme="light"] .auth-method-tabs button {
+  background: rgba(124, 58, 237, 0.08);
+  color: #7c3aed;
+  border-color: rgba(124, 58, 237, 0.12);
+}
+
+[data-theme="light"] .auth-method-tabs button.active,
+[data-theme="light"] .auth-method-tabs button:hover {
+  color: #ffffff;
+}
+.single-auth-tab {
+  grid-template-columns: 1fr;
+}
+
+.small-auth-note {
+  margin-top: 14px;
+  margin-bottom: 0;
+  font-size: 13px;
+  text-align: center;
+  opacity: 0.8;
+}

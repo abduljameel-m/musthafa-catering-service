@@ -247,3 +247,82 @@ select {
     opacity: 0.35;
   }
 }
+/* ================================
+   STABILITY + MOBILE COMPATIBILITY
+================================ */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-width: 320px;
+  touch-action: manipulation;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+.nav-link,
+.mobile-nav-link,
+.login-button,
+.enter-button,
+.primary-btn,
+.small-btn,
+.theme-choice,
+.theme-switch-button {
+  user-select: none;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(236, 72, 153, 0.45);
+  outline-offset: 3px;
+}
+
+/* Prevent horizontal scrolling */
+#root {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Better mobile input behavior */
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+
+/* Smooth card interaction */
+.summary-card,
+.stock-card,
+.premium-panel,
+.form-card,
+.leave-card,
+.attendance-mark-card,
+.login-choice-card,
+.login-form-card,
+.landing-card {
+  will-change: transform;
+}
+
+/* Reduce heavy animation on low preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

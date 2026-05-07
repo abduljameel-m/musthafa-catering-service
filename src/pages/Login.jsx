@@ -1,72 +1,97 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Eye, EyeOff, ShieldCheck, UserRound } from "lucide-react";
-import { users } from "../data/initialData";
+import {
+  ArrowLeft,
+  BadgeCheck,
+  ChefHat,
+  Mail,
+  ShieldCheck,
+  UserRound,
+} from "lucide-react";
 import { useApp } from "../context/AppContext";
+import {
+  createUserProfileIfMissing,
+  getUserProfile,
+  loginWithGoogle,
+} from "../firebase/firebase";
 
 function Login() {
   const navigate = useNavigate();
   const { t } = useApp();
 
   const [activeRole, setActiveRole] = useState(null);
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleRoleSelect = (role) => {
     setActiveRole(role);
-    setFormData({
-      username: "",
-      password: "",
-    });
     setError("");
   };
 
-  const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value.trim(),
-    });
-  };
+  const handleAuthenticatedUser = async (firebaseUser) => {
+    const existingProfile = await getUserProfile(firebaseUser.uid);
+    const userProfile =
+      existingProfile || (await createUserProfileIfMissing(firebaseUser));
 
-  const handleLogin = (event) => {
-    event.preventDefault();
-    setError("");
+    if (userProfile.status !== "active") {
+      setError(
+        "Your account is waiting for admin approval. Please contact admin."
+      );
+      return;
+    }
 
-    const selectedUser = users[activeRole];
+    if (userProfile.role !== activeRole) {
+      setError(`This account is not registered as ${activeRole}.`);
+      return;
+    }
 
-    if (
-      selectedUser &&
-      formData.username === selectedUser.username &&
-      formData.password === selectedUser.password
-    ) {
-      const userToSave = {
-        username: selectedUser.username,
-        role: selectedUser.role,
-        name: selectedUser.name,
-      };
+    const currentUser = {
+      uid: firebaseUser.uid,
+      name:
+        userProfile.name ||
+        firebaseUser.displayName ||
+        firebaseUser.phoneNumber ||
+        "User",
+      email: userProfile.email || firebaseUser.email || "",
+      phone: userProfile.phone || firebaseUser.phoneNumber || "",
+      role: userProfile.role,
+      status: userProfile.status,
+    };
 
-      localStorage.setItem("currentUser", JSON.stringify(userToSave));
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
 
-      if (selectedUser.role === "admin") {
-        navigate("/admin", { replace: true });
-      } else {
-        navigate("/employee", { replace: true });
-      }
+    if (userProfile.role === "admin") {
+      navigate("/admin", { replace: true });
     } else {
-      setError(t("invalidLogin"));
+      navigate("/employee", { replace: true });
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const firebaseUser = await loginWithGoogle();
+      await handleAuthenticatedUser(firebaseUser);
+    } catch (error) {
+      console.error(error);
+      setError(error.message || "Google login failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <main className="login-page">
       <section className="login-hero">
+        <div className="chef-logo-main">
+          <ChefHat size={42} />
+        </div>
+
         <p className="brand-tag">{t("smartShopManagement")}</p>
         <h1>{t("companyName")}</h1>
-        <p className="brand-subtitle">{t("loginSubtitle")}</p>
+        <p className="brand-subtitle">Secure login with Google.</p>
       </section>
 
       {!activeRole && (
@@ -79,7 +104,7 @@ function Login() {
               <ShieldCheck size={30} />
             </div>
             <h2>{t("adminLogin")}</h2>
-            <p>{t("adminLoginDescription")}</p>
+            <p>Manage employees, stocks, attendance, and leave requests.</p>
           </div>
 
           <div
@@ -90,17 +115,20 @@ function Login() {
               <UserRound size={30} />
             </div>
             <h2>{t("employeeLogin")}</h2>
-            <p>{t("employeeLoginDescription")}</p>
+            <p>View your own attendance, profile, and leave details.</p>
           </div>
         </section>
       )}
 
       {activeRole && (
-        <form className="login-form-card" onSubmit={handleLogin}>
+        <section className="login-form-card firebase-login-card">
           <button
             type="button"
             className="back-role-button"
-            onClick={() => setActiveRole(null)}
+            onClick={() => {
+              setActiveRole(null);
+              setError("");
+            }}
           >
             <ArrowLeft size={17} />
             {t("back")}
@@ -110,44 +138,34 @@ function Login() {
             {activeRole === "admin" ? t("adminAccess") : t("employeeAccess")}
           </h2>
 
-          <div className="form-group">
-            <label>{t("username")}</label>
-            <input
-              type="text"
-              name="username"
-              placeholder={t("enterUsername")}
-              value={formData.username}
-              onChange={handleChange}
-              autoComplete="username"
-            />
+          <p className="auth-note">
+            Login as <strong>{activeRole}</strong>. Your access will be checked
+            from Firebase.
+          </p>
+
+          <div className="auth-method-tabs single-auth-tab">
+            <button type="button" className="active">
+              <Mail size={17} />
+              Google
+            </button>
           </div>
 
-          <div className="form-group">
-            <label>{t("password")}</label>
-            <div className="password-box">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder={t("enterPassword")}
-                value={formData.password}
-                onChange={handleChange}
-                autoComplete="current-password"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-          </div>
+          <button
+            type="button"
+            className="login-button firebase-auth-button"
+            onClick={handleGoogleLogin}
+            disabled={loading}
+          >
+            <BadgeCheck size={18} />
+            {loading ? "Checking..." : "Continue with Google"}
+          </button>
+
+          <p className="auth-note small-auth-note">
+            Mobile OTP will be enabled later after Firebase billing is active.
+          </p>
 
           {error && <p className="login-error">{error}</p>}
-
-          <button className="login-button" type="submit">
-            {activeRole === "admin" ? t("loginAsAdmin") : t("loginAsEmployee")}
-          </button>
-        </form>
+        </section>
       )}
 
       <footer className="login-footer">{t("footerRights")}</footer>

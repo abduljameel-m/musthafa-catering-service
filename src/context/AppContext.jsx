@@ -18,21 +18,19 @@ function safeJsonParse(value, fallback) {
 }
 
 export function AppProvider({ children }) {
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem("language") || "en";
-  });
+  // Always start website in English
+  const [language, setLanguageState] = useState("en");
 
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") || "dark";
   });
 
-  const [profile, setProfile] = useState(() => {
+  const [profile, setProfileState] = useState(() => {
     const savedProfile = localStorage.getItem("profile");
     return safeJsonParse(savedProfile, defaultProfile);
   });
 
   useEffect(() => {
-    localStorage.setItem("language", language);
     document.documentElement.setAttribute("lang", language);
   }, [language]);
 
@@ -49,33 +47,33 @@ export function AppProvider({ children }) {
     return translations?.[language]?.[key] || translations?.en?.[key] || key;
   };
 
-  const changeLanguage = (newLanguage) => {
-    setLanguage(newLanguage);
+  const setLanguage = (newLanguage) => {
+    setLanguageState(newLanguage);
   };
 
   const toggleTheme = () => {
     setTheme((currentTheme) => (currentTheme === "dark" ? "light" : "dark"));
   };
 
-  const updateProfile = (updatedProfile) => {
+  const setProfile = (updatedProfile) => {
     const cleanProfile = {
       name: updatedProfile?.name || "",
       dob: updatedProfile?.dob || "",
       address: updatedProfile?.address || "",
     };
 
-    setProfile(cleanProfile);
+    setProfileState(cleanProfile);
   };
 
   const value = useMemo(
     () => ({
       language,
-      setLanguage: changeLanguage,
+      setLanguage,
       theme,
       setTheme,
       toggleTheme,
       profile,
-      setProfile: updateProfile,
+      setProfile,
       t,
     }),
     [language, theme, profile]
